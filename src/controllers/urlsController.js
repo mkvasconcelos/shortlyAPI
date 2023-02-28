@@ -26,3 +26,17 @@ export async function urlIdRead(_, res) {
     return res.status(500).send(err);
   }
 }
+
+export async function urlIdDelete(_, res) {
+  const { userId, userOwner, urlId } = res.locals;
+  try {
+    if (userId !== userOwner) {
+      return res.sendStatus(401);
+    }
+    let query = `DELETE FROM urls WHERE id = ${urlId};`;
+    await connection.query(query);
+    return res.sendStatus(204);
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+}

@@ -8,6 +8,8 @@ export async function urlIdValidation(req, res, next) {
     if (result.rows.length === 0) {
       return res.sendStatus(404);
     }
+    res.locals.urlId = id;
+    res.locals.userOwner = result.rows[0].userId;
     res.locals.array = result.rows[0];
     next();
   } catch (err) {
