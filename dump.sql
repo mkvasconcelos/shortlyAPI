@@ -21,22 +21,25 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: sessions; Type: TABLE; Schema: public; Owner: -
+-- Name: urls; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.sessions (
+CREATE TABLE public.urls (
     id integer NOT NULL,
+    url text NOT NULL,
+    "shortUrl" text NOT NULL,
     "userId" integer NOT NULL,
-    token text NOT NULL,
-    "createdAt" timestamp without time zone DEFAULT now() NOT NULL
+    "createdAt" timestamp without time zone DEFAULT now() NOT NULL,
+    CONSTRAINT "urls_shortUrl_check" CHECK (("shortUrl" <> ''::text)),
+    CONSTRAINT urls_url_check CHECK ((url <> ''::text))
 );
 
 
 --
--- Name: sessions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: urls_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE public.sessions_id_seq
+CREATE SEQUENCE public.urls_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -46,10 +49,10 @@ CREATE SEQUENCE public.sessions_id_seq
 
 
 --
--- Name: sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: urls_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE public.sessions_id_seq OWNED BY public.sessions.id;
+ALTER SEQUENCE public.urls_id_seq OWNED BY public.urls.id;
 
 
 --
@@ -89,10 +92,10 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: sessions id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: urls id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.sessions ALTER COLUMN id SET DEFAULT nextval('public.sessions_id_seq'::regclass);
+ALTER TABLE ONLY public.urls ALTER COLUMN id SET DEFAULT nextval('public.urls_id_seq'::regclass);
 
 
 --
@@ -103,13 +106,10 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 
 --
--- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.sessions VALUES (1, 1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3NzU5MjE5MywiZXhwIjoxNjc3NTkzOTkzfQ.j9Rj268ta9PfnKB6yfM06StfHGHDrBvm0_FFPrn9LJ4', '2023-02-28 10:49:53.198978');
-INSERT INTO public.sessions VALUES (2, 1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3NzU5MjIyMSwiZXhwIjoxNjc3NTk0MDIxfQ.jbWdpOhpl625n0XAcacBsSAnLQ65Tsa4mmbE2Ob9HdM', '2023-02-28 10:50:21.975865');
-INSERT INTO public.sessions VALUES (3, 1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3NzU5MjQyMSwiZXhwIjoxNjc3NTk0MjIxfQ.nVvP6kWYQlYeYjUubH8wP0ensDgrouemjcw4ueFqd5I', '2023-02-28 10:53:41.570353');
-INSERT INTO public.sessions VALUES (4, 1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3NzU5MjU1NiwiZXhwIjoxNjc3NTk0MzU2fQ.Adf_uJvRKSWYutYkeJMNjN7c39CUbd9X0WFsEPFdX9s', '2023-02-28 10:55:56.627579');
+INSERT INTO public.urls VALUES (1, 'https://www.globo.com', '1mIK0tRMgpuyBE9HsjB8f', 1, '2023-02-28 19:38:50.928873');
 
 
 --
@@ -117,36 +117,29 @@ INSERT INTO public.sessions VALUES (4, 1, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
 --
 
 INSERT INTO public.users VALUES (1, 'Mateus Vasconcelos', 'mateus@gmail.com', '$2b$10$si4lN8tmvwNmDd7X4EeHzezdlcKPRpWa2LyseHRX7Cfi0vLL68TaG', '2023-02-28 10:20:22.984212');
+INSERT INTO public.users VALUES (2, 'João Pedro Gonzalez', 'jpg@gmail.com', '$2b$10$GivVkPJdusTpaV3orSR2n.49M7udA.EGLX4tq1mf3jOql4CmwYhli', '2023-02-28 11:06:20.95784');
 
 
 --
--- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 4, true);
+SELECT pg_catalog.setval('public.urls_id_seq', 1, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, true);
+SELECT pg_catalog.setval('public.users_id_seq', 2, true);
 
 
 --
--- Name: sessions sessions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: urls urls_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.sessions
-    ADD CONSTRAINT sessions_pkey PRIMARY KEY (id);
-
-
---
--- Name: sessions sessions_token_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.sessions
-    ADD CONSTRAINT sessions_token_key UNIQUE (token);
+ALTER TABLE ONLY public.urls
+    ADD CONSTRAINT urls_pkey PRIMARY KEY (id);
 
 
 --
@@ -166,11 +159,11 @@ ALTER TABLE ONLY public.users
 
 
 --
--- Name: sessions sessions_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: urls urls_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.sessions
-    ADD CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
+ALTER TABLE ONLY public.urls
+    ADD CONSTRAINT "urls_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
 
 
 --
