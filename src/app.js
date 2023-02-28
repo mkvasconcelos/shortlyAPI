@@ -13,3 +13,6 @@ app.use(router);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// DUMP SQL
+// sudo -u mateus.vasconcelos pg_dump shortly --inserts --no-owner > dump.sql
