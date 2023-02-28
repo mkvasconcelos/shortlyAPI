@@ -15,3 +15,14 @@ export async function urlsCreate(_, res) {
     return res.status(500).send(err);
   }
 }
+
+export async function urlIdRead(_, res) {
+  const { array } = res.locals;
+  try {
+    delete array.userId;
+    delete array.createdAt;
+    return res.status(200).send(array);
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+}
