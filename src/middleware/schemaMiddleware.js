@@ -1,5 +1,6 @@
 import { signUpSchema, signInSchema } from "../schemas/authSchema.js";
 import bcrypt from "bcrypt";
+import { urlsSchema } from "../schemas/urlsSchema.js";
 
 export async function signUpValidation(req, res, next) {
   const body = req.body;
@@ -22,5 +23,15 @@ export async function signInValidation(req, res, next) {
   }
   res.locals.email = body.email;
   res.locals.password = body.password;
+  next();
+}
+
+export async function urlsValidation(req, res, next) {
+  const body = req.body;
+  const { error } = urlsSchema.validate(body);
+  if (error) {
+    return res.status(422).send(error.details[0].message);
+  }
+  res.locals.url = body.url;
   next();
 }
