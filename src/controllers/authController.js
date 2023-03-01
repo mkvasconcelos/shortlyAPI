@@ -5,7 +5,7 @@ export async function userCreate(_, res) {
   const { name, email, password } = res.locals;
   try {
     await connection.query(
-      `INSERT INTO users ("fullName", email, "hashPwd") 
+      `INSERT INTO users ("name", email, "hashPwd") 
          VALUES ($1, $2, $3);`,
       [name, email, password]
     );

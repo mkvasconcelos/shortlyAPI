@@ -45,7 +45,7 @@ export async function urlOpen(_, res) {
   const { urlId, url, accesses } = res.locals;
   try {
     let query = `UPDATE urls SET accesses = $1 WHERE id = ${urlId};`;
-    await connection.query(query, [accesses]);
+    await connection.query(query, [accesses + 1]);
     return res.status(200).redirect(url);
   } catch (err) {
     return res.status(500).send(err);

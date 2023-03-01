@@ -17,6 +17,5 @@ urlsRouter.post("/urls/shorten", tokenValidation, urlsValidation, urlsCreate);
 urlsRouter.get("/urls/:id", urlIdValidation, urlIdRead);
 urlsRouter.get("/urls/open/:shortUrl", shortUrlValidation, urlOpen);
 urlsRouter.delete("/urls/:id", tokenValidation, urlIdValidation, urlIdDelete);
-urlsRouter.get("/users/me");
 
 export default urlsRouter;
