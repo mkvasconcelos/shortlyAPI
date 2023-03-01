@@ -62,13 +62,13 @@ ALTER SEQUENCE public.urls_id_seq OWNED BY public.urls.id;
 
 CREATE TABLE public.users (
     id integer NOT NULL,
-    "fullName" text NOT NULL,
     email text NOT NULL,
+    name text NOT NULL,
     "hashPwd" character varying(255) NOT NULL,
     "createdAt" timestamp without time zone DEFAULT now() NOT NULL,
     CONSTRAINT users_email_check CHECK ((email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'::text)),
-    CONSTRAINT "users_fullName_check" CHECK (("fullName" <> ''::text)),
-    CONSTRAINT "users_hashPwd_check" CHECK ((("hashPwd")::text <> ''::text))
+    CONSTRAINT "users_hashPwd_check" CHECK ((("hashPwd")::text <> ''::text)),
+    CONSTRAINT users_name_check CHECK ((name <> ''::text))
 );
 
 
@@ -110,29 +110,31 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.urls VALUES (1, 'https://www.globo.com', 'jY_ss37c6I8AIdg0hPWkK', 1, 2, '2023-03-01 19:50:52.562752');
+INSERT INTO public.urls VALUES (2, 'https://www.driven.com.br', 'vWO_MQ9Wu78uIxo_PevwP', 1, 2, '2023-03-01 19:50:59.747777');
+INSERT INTO public.urls VALUES (3, 'https://www.driven.com.br', 'w4AJ1aZcLm2hpOQ_lkr48', 1, 0, '2023-03-01 19:52:18.342871');
+INSERT INTO public.urls VALUES (4, 'https://hub.driven.com.br', 'qNrJkR_B0bK_akRE2E8e5', 1, 1, '2023-03-01 19:52:41.715514');
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.users VALUES (1, 'Mateus Vasconcelos', 'mateus@gmail.com', '$2b$10$si4lN8tmvwNmDd7X4EeHzezdlcKPRpWa2LyseHRX7Cfi0vLL68TaG', '2023-02-28 10:20:22.984212');
-INSERT INTO public.users VALUES (2, 'João Pedro Gonzalez', 'jpg@gmail.com', '$2b$10$GivVkPJdusTpaV3orSR2n.49M7udA.EGLX4tq1mf3jOql4CmwYhli', '2023-02-28 11:06:20.95784');
-INSERT INTO public.users VALUES (3, 'Yuri Pereira', 'Yuri.Pereira@live.com', '$2b$10$75VmZ/xVQIo32i9O9sUTFOXEN2IXq7RM.zf1XTTtpOMOiY32/VZhu', '2023-02-28 20:12:56.29062');
+INSERT INTO public.users VALUES (1, 'mateus@gmail.com', 'Mateus', '$2b$10$m8u3ATzmfFKWItAhHgirOO.nYGBRNekCtfkv/YBaTrrfVer6Zc4Je', '2023-03-01 19:48:53.219022');
 
 
 --
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
+SELECT pg_catalog.setval('public.urls_id_seq', 4, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 3, true);
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 
 
 --
@@ -141,14 +143,6 @@ SELECT pg_catalog.setval('public.users_id_seq', 3, true);
 
 ALTER TABLE ONLY public.urls
     ADD CONSTRAINT urls_pkey PRIMARY KEY (id);
-
-
---
--- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_email_key UNIQUE (email);
 
 
 --
