@@ -5,7 +5,7 @@ export async function userRead(_, res) {
   try {
     let queryUser = ` SELECT users.id, users.name, SUM(urls.accesses) AS "visitCount"
                   FROM users 
-                  INNER JOIN urls ON urls."userId" = users."id" 
+                  LEFT JOIN urls ON urls."userId" = users."id" 
                   WHERE users.id = ${userId}
                   GROUP BY users.id;`;
     const resultUser = await connection.query(queryUser);
