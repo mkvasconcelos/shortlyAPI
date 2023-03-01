@@ -29,6 +29,7 @@ CREATE TABLE public.urls (
     url text NOT NULL,
     "shortUrl" text NOT NULL,
     "userId" integer NOT NULL,
+    accesses integer DEFAULT 0 NOT NULL,
     "createdAt" timestamp without time zone DEFAULT now() NOT NULL,
     CONSTRAINT "urls_shortUrl_check" CHECK (("shortUrl" <> ''::text)),
     CONSTRAINT urls_url_check CHECK ((url <> ''::text))
@@ -109,7 +110,6 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO public.urls VALUES (1, 'https://www.globo.com', '1mIK0tRMgpuyBE9HsjB8f', 1, '2023-02-28 19:38:50.928873');
 
 
 --
@@ -118,20 +118,21 @@ INSERT INTO public.urls VALUES (1, 'https://www.globo.com', '1mIK0tRMgpuyBE9HsjB
 
 INSERT INTO public.users VALUES (1, 'Mateus Vasconcelos', 'mateus@gmail.com', '$2b$10$si4lN8tmvwNmDd7X4EeHzezdlcKPRpWa2LyseHRX7Cfi0vLL68TaG', '2023-02-28 10:20:22.984212');
 INSERT INTO public.users VALUES (2, 'João Pedro Gonzalez', 'jpg@gmail.com', '$2b$10$GivVkPJdusTpaV3orSR2n.49M7udA.EGLX4tq1mf3jOql4CmwYhli', '2023-02-28 11:06:20.95784');
+INSERT INTO public.users VALUES (3, 'Yuri Pereira', 'Yuri.Pereira@live.com', '$2b$10$75VmZ/xVQIo32i9O9sUTFOXEN2IXq7RM.zf1XTTtpOMOiY32/VZhu', '2023-02-28 20:12:56.29062');
 
 
 --
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 1, true);
+SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 2, true);
+SELECT pg_catalog.setval('public.users_id_seq', 3, true);
 
 
 --

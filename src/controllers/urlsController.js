@@ -40,3 +40,14 @@ export async function urlIdDelete(_, res) {
     return res.status(500).send(err);
   }
 }
+
+export async function urlOpen(_, res) {
+  const { urlId, url, accesses } = res.locals;
+  try {
+    let query = `UPDATE urls SET accesses = $1 WHERE id = ${urlId};`;
+    await connection.query(query, [accesses]);
+    return res.status(200).redirect(url);
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+}
