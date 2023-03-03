@@ -6,6 +6,8 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
+// export const JWT_SECRET =
+//   "MFswDQYJKoZIhvcNAQEBBQADSgAwRwJAdu1IArl4KL8bH4YJLlAbFp/okKfxv8HwWKzJZLm/K/zdofX9c/hQIDAQAB";
 app.use(cors());
 app.use(express.json());
 app.use(router);
