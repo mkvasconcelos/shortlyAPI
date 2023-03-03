@@ -3,15 +3,18 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../app.js";
 // import dotenv from "dotenv";
 // dotenv.config();
+import UserRepository from "../repositories/userRepository.js";
+const userRepository = new UserRepository();
 
 export async function userCreate(_, res) {
   const { name, email, password } = res.locals;
   try {
-    await connection.query(
-      `INSERT INTO users ("name", email, "hashPwd") 
-         VALUES ($1, $2, $3);`,
-      [name, email, password]
-    );
+    // await connection.query(
+    //   `INSERT INTO users ("name", email, "hashPwd")
+    //      VALUES ($1, $2, $3);`,
+    //   [name, email, password]
+    // );
+    await userRepository.insertUser(name, email, password);
     return res.sendStatus(201);
   } catch (err) {
     return res.status(500).send(err);
