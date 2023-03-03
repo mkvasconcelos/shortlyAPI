@@ -14,9 +14,7 @@ export async function userCreate(_, res) {
 
 export async function login(_, res) {
   const { userId } = res.locals;
-  const secretKey =
-    "MFswDQYJKoZIhvcNAQEBBQADSgAwRwJAdu1IArl4KL8bH4YJLlAbFp/okKfxv8HwWKzJZLm/K/zdofX9c/hQIDAQAB";
-  // const secretKey = process.env.JWT_SECRET;
+  const secretKey = process.env.JWT_SECRET;
   const validity = { expiresIn: 60 * 30 };
   const token = jwt.sign({ userId }, secretKey, validity);
   try {
