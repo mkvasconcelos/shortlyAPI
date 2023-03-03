@@ -51,4 +51,14 @@ export default class UrlsRepository {
       throw err;
     }
   }
+
+  async getUrl(url, shortUrl, userId) {
+    try {
+      let query = `SELECT id, "shortUrl" FROM urls WHERE url = $1 AND "shortUrl" = $2 AND "userId" = $3;`;
+      const result = await connection.query(query, [url, shortUrl, userId]);
+      return result.rows[0];
+    } catch (err) {
+      throw err;
+    }
+  }
 }
