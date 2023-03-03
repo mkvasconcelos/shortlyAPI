@@ -1,8 +1,8 @@
 import connection from "../database/database.js";
 import jwt from "jsonwebtoken";
-// import { JWT_SECRET } from "../app.js";
-import dotenv from "dotenv";
-dotenv.config();
+import { JWT_SECRET } from "../app.js";
+// import dotenv from "dotenv";
+// dotenv.config();
 
 export async function userCreate(_, res) {
   const { name, email, password } = res.locals;
@@ -20,8 +20,8 @@ export async function userCreate(_, res) {
 
 export async function login(_, res) {
   const { userId } = res.locals;
-  const secretKey = process.env.JWT_SECRET;
-  // const secretKey = JWT_SECRET;
+  // const secretKey = process.env.JWT_SECRET;
+  const secretKey = JWT_SECRET;
   const validity = { expiresIn: 60 * 30 };
   const token = jwt.sign({ userId }, secretKey, validity);
   try {
