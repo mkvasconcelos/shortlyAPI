@@ -23,7 +23,7 @@ export async function login(_, res) {
   const validity = { expiresIn: 60 * 30 };
   const token = jwt.sign({ userId }, secretKey, validity);
   try {
-    return res.status(200).send(token);
+    return res.status(200).send({ token });
   } catch (err) {
     return res.status(500).send(err);
   }
