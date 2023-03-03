@@ -10,7 +10,11 @@ export async function urlsCreate(_, res) {
          VALUES ($1, $2, $3);`,
       [url, shortUrl, userId]
     );
-    return res.sendStatus(201);
+    const result = await connection.query(
+      `SELECT id, "shortUrl" FROM urls WHERE url = $1 AND "shortUrl" = $2 AND "userId" = $3;`,
+      [url, shortUrl, userId]
+    );
+    return res.status(201).send(result.rows[0]);
   } catch (err) {
     return res.status(500).send(err);
   }
